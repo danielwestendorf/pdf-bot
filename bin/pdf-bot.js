@@ -392,21 +392,22 @@ program
   .description('Continously process the next job')
   .action(function (url) {
     openConfig()
+    var maxTries = configuration.queue.generationMaxTries
+    var retryStrategy = configuration.queue.generationRetryStrategy
 
     function findAndProcessNext() {
-      var maxTries = configuration.queue.generationMaxTries
-      var retryStrategy = configuration.queue.generationRetryStrategy
-
-      return queue.getNext(retryStrategy, maxTries)
+      queue.getNext(retryStrategy, maxTries)
         .then(function (next) {
           if (!next) {
-            setTimeout(findAndProcessNext, 60);
+            setTimeout(findAndProcessNext, 100);
           }
 
-          return processJob(next, configuration)
+          processJob(next, configuration, false)
         })
         .catch(handleDbError)
     }
+
+    findAndProcessNext();
   })
 
 program
