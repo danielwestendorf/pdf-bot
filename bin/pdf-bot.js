@@ -402,7 +402,7 @@ program
             setTimeout(findAndProcessNext, 100);
           }
 
-          processJob(next, configuration, false)
+          processJob(next, configuration, false).then(findAndProcessNext);
         })
         .catch(handleDbError)
     }
