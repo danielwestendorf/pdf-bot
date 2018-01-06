@@ -329,6 +329,8 @@ module.exports = {
 }
 ```
 
+Optionally, you can specify a databaseUrl.
+
 To install the necessary database tables, run `db:migrate`. You can also destroy the database by running `db:destroy`.
 
 ## Storage
