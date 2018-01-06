@@ -388,6 +388,28 @@ program
   })
 
 program
+  .command('process')
+  .description('Continously process the next job')
+  .action(function (url) {
+    openConfig()
+
+    function findAndProcessNext() {
+      var maxTries = configuration.queue.generationMaxTries
+      var retryStrategy = configuration.queue.generationRetryStrategy
+
+      return queue.getNext(retryStrategy, maxTries)
+        .then(function (next) {
+          if (!next) {
+            setTimeout(findAndProcessNext, 60);
+          }
+
+          return processJob(next, configuration)
+        })
+        .catch(handleDbError)
+    }
+  })
+
+program
   .command('shift')
   .description('Run the next job in the queue')
   .action(function (url) {
