@@ -22,7 +22,7 @@ function createPdfGenerator(storagePath, options = {}, storagePlugins = {}) {
 
     return htmlPdf
       .create(url, options)
-      .then((pdf) => {
+      .then(function(pdf) {
         var pdfPath = path.join(storagePath, 'pdf', (uuid() + '.pdf'))
 
         debug('Saving PDF to %s', pdfPath)
@@ -51,7 +51,7 @@ function createPdfGenerator(storagePath, options = {}, storagePlugins = {}) {
               )
             }
 
-            return Promise.all(storagePluginPromises).then(responses => {
+            return Promise.all(storagePluginPromises).then(function(responses) {
               for(var i in responses) {
                 var response = responses[i]
 
@@ -70,7 +70,7 @@ function createPdfGenerator(storagePath, options = {}, storagePlugins = {}) {
             })
           })
       })
-      .catch(msg => {
+      .catch(function(msg) {
         var response = error.createErrorResponse(error.ERROR_HTML_PDF_CHROME_ERROR)
 
         response.message += ' ' + msg
