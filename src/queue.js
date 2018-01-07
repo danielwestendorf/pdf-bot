@@ -134,6 +134,9 @@ function processJob (db, generator, job, webhookOptions) {
           return response
         })
     })
+    .catch(function(response) {
+      console.error(response)
+    })
 }
 
 // =======
