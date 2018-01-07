@@ -74,6 +74,7 @@ function createPdfGenerator(storagePath, options = {}, storagePlugins = {}) {
         var response = error.createErrorResponse(error.ERROR_HTML_PDF_CHROME_ERROR)
 
         response.message += ' ' + msg
+        console.log(response.message);
 
         return Object.assign(createResponseObject(), response)
       })
